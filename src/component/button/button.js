@@ -1,17 +1,26 @@
 import { l } from "lapp"
-import './button.css'
+import { filter, getCtlCls } from '../../common/util'
 
-const state = {
-    count: 0
-}
+import './_button.scss'
 
-export const actions = {
-    addCount: () => {
-        state.count++;
-        MyButtonView.$update()
+const ctlProps = ['fab', 'raised', 'primary', 'accent', 'icon', 'class']
+
+const actions = {
+    getCls: (props) => {
+        return "mdl-button mdl-js-button"
+            + (props.ripple ? " mdl-js-ripple-effect" : "")
+            + getCtlCls(props, ctlProps.slice(0, 5), 'mdl-button')
+            + (props.class ? ` ${props.class}` : "")
     }
 }
-
-export const MyButtonView = ({props, children}) =>(
-    <button onClick={actions.addCount} {...props}>{children}{state.count}</button>
-)
+/**
+ *
+ * @param {*} props
+ * @param {*} children
+ */
+export const Button = ({ props, children }) => {
+    props = props || {}
+    return <button class={actions.getCls(props)} {...(filter(props, ctlProps))}>
+        {children}
+    </button>
+}

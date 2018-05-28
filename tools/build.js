@@ -14,6 +14,7 @@ const postcss = require('rollup-plugin-postcss');
 const uglify = require('rollup-plugin-uglify').uglify;
 const minify = require('uglify-es').minify;
 const buble = require('rollup-plugin-buble');
+const resolve = require( 'rollup-plugin-node-resolve');
 // PostCSS plugins
 const simplevars = require('postcss-simple-vars');  //可以使用Sass风格的变量
 const nested = require('postcss-nested'); //允许使用嵌套规则。
@@ -24,48 +25,55 @@ const pkg = require('../package.json');
 let promise = Promise.resolve();
 
 // Clean up the output directory
-promise = promise.then(() => del(['dist/*']));
+// promise = promise.then(() => del(['dist/*']));
 
 // Compile source code into a distributable format with Babel
-['es', 'cjs', 'umd'].forEach((format) => {
-    promise = promise.then(() => rollup.rollup({
-        input: 'src/index.js',
-        external: Object.keys(pkg.dependencies),
-        plugins: [
-            postcss({
-                plugins: [
-                    simplevars(),
-                    nested(),
-                    cssnext({ warnForDuplicates: false, }),
-                    cssnano()],
-                extensions: ['.css']
-            }),
-            babel(Object.assign({
-                babelrc: false,
-                exclude: 'node_modules/**',
-                runtimeHelpers: true,
-                presets: [[
-                    'env',
-                    {
-                        'modules': false
-                    }
-                ]],
-                plugins: [
-                    ['transform-react-jsx', {
-                        'pragma': 'l'
-                    }], "external-helpers"
-                ]
-            })),
-            buble(),
-            uglify({ mangle: { toplevel: true } }, minify)
-        ]
-    }).then(bundle => bundle.write({
-        file: `dist/${format === 'cjs' ? 'index' : `index.${format}`}.js`,
-        format,
-        sourceMap: true,
-        name: format === 'umd' ? pkg.name : undefined,
-    })));
-});
+[
+    'lappComponent',
+    'index',
+
+].forEach(item => {
+    ['es', 'cjs', 'umd'].forEach((format) => {
+        promise = promise.then(() => rollup.rollup({
+            input: `src/${item}.js`,
+            external: Object.keys(pkg.dependencies).concat(['lapp', 'lapp-component']),
+            plugins: [
+                resolve({"jsnext": true}),
+                postcss({
+                    plugins: [
+                        simplevars(),
+                        nested(),
+                        cssnext({ warnForDuplicates: false, }),
+                        cssnano()],
+                    extensions: ['.scss']
+                }),
+                babel(Object.assign({
+                    babelrc: false,
+                    exclude: 'node_modules/**',
+                    runtimeHelpers: true,
+                    presets: [[
+                        'env',
+                        {
+                            'modules': false
+                        }
+                    ]],
+                    plugins: [
+                        ['transform-react-jsx', {
+                            'pragma': 'l'
+                        }], "external-helpers"
+                    ]
+                })),
+                // buble(),
+                // uglify({ mangle: { toplevel: true } }, minify)
+            ]
+        }).then(bundle => bundle.write({
+            file: `dist/${item}${format === 'cjs' ? '' : `.${format}`}.js`,
+            format,
+            sourceMap: true,
+            name: format === 'umd' ? `${item}` : undefined
+        })))
+    })
+})
 
 // Copy package.json and LICENSE.txt
 promise = promise.then(() => {

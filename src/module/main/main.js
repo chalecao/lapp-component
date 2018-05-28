@@ -6,6 +6,7 @@ let state = {
     aa: -1,
     bb: -1,
     checked: true,
+    key: 10,
     data: [{ name: "11", href: "22" }, { name: "33", href: "44" }]
 }
 
@@ -17,6 +18,12 @@ const actions = {
     },
     handleClick() {
         state.data.push({ name: "77", href: "88" })
+        BoxView.$update()
+    },
+    handleClickButton(e, data){
+        state.key ++;
+        console.log(state.key)
+        console.log(e, data)
         BoxView.$update()
     },
     handleCheck(e) {
@@ -41,10 +48,8 @@ export const BoxView = ({ props, children }) => (<ul style="list-style: none;">
         <p>{state.inputVal}</p>
     </li>
     <li onClick={actions.handleClick} forceUpdate={true}>click to show more</li>
-    <MyButtonView className="button">hello, button</MyButtonView>
+    <MyButtonView key={state.key} className="button" onClick={actions.handleClickButton}>hello, button</MyButtonView>
     {actions.compute(state.data)}
 </ul>
 )
-
-MyButtonView.$update = () => BoxView.$update()
 
