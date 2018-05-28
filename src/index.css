@@ -31,13 +31,13 @@
 .demo-card > .mdl-card__title {
     color: #fff;
     height: 176px;
-    background: url('/assets/demos/welcome_card.jpg') center / cover;
+    background: url('../assets/demos/welcome_card.jpg') center / cover;
 }
 
 .demo-layout-transparent {
     height: 300px;
     position: relative;
-    background: url('/assets/demos/transparent.jpg') center / cover;
+    background: url('../assets/demos/transparent.jpg') center / cover;
 }
 
 .demo-layout-transparent .mdl-layout__header, .demo-layout-transparent .mdl-layout__drawer-button {
