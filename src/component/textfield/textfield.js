@@ -2,7 +2,7 @@ import { l, app } from "lapp"
 import { filter, getCtlCls } from '../../common/util'
 import './_textfield.scss'
 
-const ctlProps = ['expandable', 'floating-label', 'class', 'label', 'pattern', 'errorTips', 'textarea', 'rows', 'maxrows']
+const ctlProps = ['expandable', 'floating-label', 'class', 'label', 'pattern', 'errorTips', 'textarea', 'rows', 'maxrows','noBlur']
 
 const act = {
     getCls: (props) => {
@@ -28,18 +28,20 @@ const act = {
 
             getType: (props, state) => {
                 if (props['textarea']) {
-                    return <textarea onInput={actions.handleInput(state)} onFocus={actions.handleFocus(state)} onBlur={actions.handleBlur(state)} class="mdl-textfield__input" type="text" rows={props.rows || 3} maxrows={props.maxrows || 3}></textarea>
+                    return <textarea onInput={actions.handleInput(state)} onFocus={actions.handleFocus(state)} onBlur={actions.handleBlur(props, state)} class="mdl-textfield__input" type="text" rows={props.rows || 3} maxrows={props.maxrows || 3}></textarea>
                 } else {
-                    return <input onClick={actions.handleClick(props)} onInput={actions.handleInput(state)} onFocus={actions.handleFocus(state)} onBlur={actions.handleBlur(state)} class="mdl-textfield__input" type="text" pattern={props.pattern} />
+                    return <input onClick={actions.handleClick(props)} onInput={actions.handleInput(state)} onFocus={actions.handleFocus(state)} onBlur={actions.handleBlur(props, state)} class="mdl-textfield__input" type="text" pattern={props.pattern} />
                 }
             },
             handleFocus: (state) => (e) => {
                 state.focusCls = " is-focused"
                 TextfieldSub.$update()
             },
-            handleBlur: (state) => (e) => {
-                state.focusCls = ""
-                TextfieldSub.$update()
+            handleBlur: (props, state) => (e) => {
+                if(!props.noBlur){
+                    state.focusCls = ""
+                    TextfieldSub.$update()
+                }
             },
             handleClick: (props) => (e) => {
                 props.onClick && props.onClick(e)

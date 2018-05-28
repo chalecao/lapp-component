@@ -4,32 +4,38 @@ import MaterialDateTimePicker from './js/index';
 import { Textfield } from "../../component/textfield/textfield"
 import moment from 'moment';
 
-const picker = new MaterialDateTimePicker()
+
 // .on('submit', (val) => console.log(`data: ${val}`))
 // .on('open', () => console.log('opened'))
 // .on('close', () => console.log('closed'));
 
 const ctlProps = ['class', 'format']
-
-const actions = {
+const acts = {
     getCls: (props) => {
-        return "mdl-textfield__input"
-            + (props.class ? ` ${props.class}` : "")
+        return (props.class ? `${props.class}` : "")
     },
-    handleClick: (props) => (e) => {
-        picker.open();
-        picker.on('submit', (val) => {
-            e.target.value = moment(val).format(props.format || 'YYYY-MM-DD HH:mm:ss')
-            props.onChange && props.onChange(val)
+    onShow: (props, children) => (dom) => {
+        let picker = new MaterialDateTimePicker();
 
-        })
+        let actions = {
+            handleClick: (props) => (e) => {
+                picker.open();
+
+                picker.on('submit', (val) => {
+                    e.target.value = moment(val).format(props.format || 'YYYY-MM-DD HH:mm:ss')
+                    props.onChange && props.onChange(val)
+
+                })
+                DatePicker.$update()
+            }
+        }
+        const DatePicker = () => {
+            return <Textfield onClick={actions.handleClick(props)} noBlur {...filter(props,ctlProps)}>{children}</Textfield>
+        }
+        app(dom, DatePicker)
+
     }
 }
-/**
- *
- * @param {*} props
- * @param {*} children
- */
-export const DatetimePicker = ({ props, children }) => {
-    return <Textfield onClick={actions.handleClick(props)} {...filter(props,ctlProps)}>{children}</Textfield>
-}
+
+
+export const DatetimePicker = ({ props, children }) => <span onShow={acts.onShow(props, children)} class={acts.getCls(props)}></span>

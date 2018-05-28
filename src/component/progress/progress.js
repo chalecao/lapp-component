@@ -7,7 +7,7 @@ const ctlProps = ['class', 'indeterminate', 'pend']
 const actions = {
     getCls: (props) => {
         return "mdl-progress mdl-js-progress is-upgraded"
-            + (props['indeterminate'] ? ` mdl-progress__indeterminate` : "")
+            + (props['indeterminate'] ? ` mdl-progress--indeterminate` : "")
             + (props['class'] ? ` ${props['class']}` : "")
     }
 }

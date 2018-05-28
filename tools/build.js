@@ -44,7 +44,8 @@ let promise = Promise.resolve();
                         simplevars(),
                         nested(),
                         cssnext({ warnForDuplicates: false, }),
-                        cssnano()],
+                        // cssnano()
+                        ],
                     extensions: ['.scss']
                 }),
                 babel(Object.assign({
