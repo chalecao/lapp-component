@@ -1,5 +1,5 @@
 # lapp component
-基于lapp和Material Design 规范封装的组件。在线示例： https://chalecao.github.io/lapp-component/dist/indx.html
+基于lapp和Material Design 规范封装的组件。在线示例： https://chalecao.github.io/lapp-component/dist/index.html
 
 # usage
 ```
