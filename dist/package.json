@@ -1,0 +1,13 @@
+{
+  "name": "lapp-component",
+  "version": "0.0.1",
+  "description": "基于lapp的rollup打包开发种子基础项目",
+  "repository": "chalecao/lapp-startkit",
+  "author": "chalecao <chh_exe@163.com> (http:/www.fed123.com)",
+  "license": "MIT",
+  "keywords": [],
+  "dependencies": {
+    "babel-runtime": "^6.11.6",
+    "lapp": "^1.1.1"
+  }
+}

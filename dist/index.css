@@ -1,0 +1,56 @@
+/* css reset, base css*/
+
+#app {
+    margin-bottom: 200px;
+}
+
+.f-b-b {
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.f-m-r {
+    margin-right: 30px !important;
+}
+
+.f-d-ib {
+    display: inline-block !important;
+}
+
+.f-vm {
+    vertical-align: middle;
+}
+
+.w-400 {
+    width: 400px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.demo-card > .mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background: url('/assets/demos/welcome_card.jpg') center / cover;
+}
+
+.demo-layout-transparent {
+    height: 300px;
+    position: relative;
+    background: url('/assets/demos/transparent.jpg') center / cover;
+}
+
+.demo-layout-transparent .mdl-layout__header, .demo-layout-transparent .mdl-layout__drawer-button {
+    /* This background is dark, so we set text to white. Use 87% black instead if
+       your background is light. */
+    color: white;
+}
+
+.demo-tabpanel {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.demo-tabpanel .tab-content {
+    height: 100px;
+    padding: 10px;
+}
