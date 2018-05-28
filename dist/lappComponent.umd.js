@@ -1,8 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('lapp')) :
-    typeof define === 'function' && define.amd ? define(['lapp'], factory) :
-    (global.lappComponent = factory(global.lapp));
-}(this, (function (lapp) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('lapp'), require('rome')) :
+    typeof define === 'function' && define.amd ? define(['lapp', 'rome'], factory) :
+    (global.lappComponent = factory(global.lapp,global.rome));
+}(this, (function (lapp,rome) { 'use strict';
+
+    rome = rome && rome.hasOwnProperty('default') ? rome['default'] : rome;
 
     function filter(props, ctlProps) {
         var newProp = Object.assign({}, props);
@@ -5578,7 +5580,7 @@
             this.setTime(this.value);
           }
 
-          // this.initializeRome(this.$(`.${this.options.styles.container}`), this.options.dateValidator);
+          this.initializeRome(this.$('.' + this.options.styles.container), this.options.dateValidator);
           this._listenForCloseEvents();
 
           this._show();

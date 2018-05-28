@@ -1,4 +1,5 @@
 import { l, app } from 'lapp';
+import rome from 'rome';
 
 function filter(props, ctlProps) {
     var newProp = Object.assign({}, props);
@@ -5574,7 +5575,7 @@ var DateTimePicker = function (_Events) {
         this.setTime(this.value);
       }
 
-      // this.initializeRome(this.$(`.${this.options.styles.container}`), this.options.dateValidator);
+      this.initializeRome(this.$('.' + this.options.styles.container), this.options.dateValidator);
       this._listenForCloseEvents();
 
       this._show();

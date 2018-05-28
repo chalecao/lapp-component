@@ -1,6 +1,9 @@
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
 var lapp = require('lapp');
+var rome = _interopDefault(require('rome'));
 
 function filter(props, ctlProps) {
     var newProp = Object.assign({}, props);
@@ -5576,7 +5579,7 @@ var DateTimePicker = function (_Events) {
         this.setTime(this.value);
       }
 
-      // this.initializeRome(this.$(`.${this.options.styles.container}`), this.options.dateValidator);
+      this.initializeRome(this.$('.' + this.options.styles.container), this.options.dateValidator);
       this._listenForCloseEvents();
 
       this._show();

@@ -1,3 +1,4 @@
+import rome from 'rome';
 import moment from 'moment';
 
 import popupTemplate from '../template/datepicker.template';
@@ -101,7 +102,7 @@ class DateTimePicker extends Events {
       this.setTime(this.value);
     }
 
-    // this.initializeRome(this.$(`.${this.options.styles.container}`), this.options.dateValidator);
+    this.initializeRome(this.$(`.${this.options.styles.container}`), this.options.dateValidator);
     this._listenForCloseEvents();
 
     this._show();
