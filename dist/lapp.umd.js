@@ -3,19 +3,19 @@
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
     (factory((global.lapp = {})));
   }(this, (function (exports) { 'use strict';
-  
+
     var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
       return typeof obj;
     } : function (obj) {
       return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
-  
+
     var classCallCheck = function (instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError("Cannot call a class as a function");
       }
     };
-  
+
     var createClass = function () {
       function defineProperties(target, props) {
         for (var i = 0; i < props.length; i++) {
@@ -26,19 +26,19 @@
           Object.defineProperty(target, descriptor.key, descriptor);
         }
       }
-  
+
       return function (Constructor, protoProps, staticProps) {
         if (protoProps) defineProperties(Constructor.prototype, protoProps);
         if (staticProps) defineProperties(Constructor, staticProps);
         return Constructor;
       };
     }();
-  
+
     var inherits = function (subClass, superClass) {
       if (typeof superClass !== "function" && superClass !== null) {
         throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
       }
-  
+
       subClass.prototype = Object.create(superClass && superClass.prototype, {
         constructor: {
           value: subClass,
@@ -49,25 +49,25 @@
       });
       if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     };
-  
+
     var possibleConstructorReturn = function (self, call) {
       if (!self) {
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
       }
-  
+
       return call && (typeof call === "object" || typeof call === "function") ? call : self;
     };
-  
+
     var toConsumableArray = function (arr) {
       if (Array.isArray(arr)) {
         for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-  
+
         return arr2;
       } else {
         return Array.from(arr);
       }
     };
-  
+
     var isType = function isType(type) {
         return function (value) {
             return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === type;
@@ -103,7 +103,7 @@
     var isSameThunk = function isSameThunk(pre, next) {
         return pre.fn === next.fn;
     };
-  
+
     var isSVG = function isSVG(name) {
         return ['svg', 'path', 'animate'].indexOf(name) >= 0;
     };
@@ -114,7 +114,7 @@
     var extractEventName = function extractEventName(name) {
         return name.slice(2).toLowerCase();
     };
-  
+
     var JSON2Hash = function JSON2Hash(data, path) {
         var res = {};
         Object.keys(data).forEach(function (key) {
@@ -125,7 +125,7 @@
         });
         return res;
     };
-  
+
     var findChildren = function findChildren(children, key) {
         var index = -1;
         var _children = children.find(function (item, i) {
@@ -136,7 +136,7 @@
         });
         return { index: index, children: _children };
     };
-  
+
     // 深度克隆
     var deepClone = function deepClone(obj) {
         var result;
@@ -160,30 +160,30 @@
         }
         return result;
     };
-  
+
     function createNode(type) {
-      var arguments$1 = arguments;
-  
-      for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        children[_key - 2] = arguments$1[_key];
-      }
-  
-      var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  
-      if (!type) { return; }
-  
-      children = Array.prototype.reduce.call(children, reduceChildren, []);
-      if (isFunction(type)) {
-        return createThunk(type, attributes, children, type);
-      }
-      return {
-        type: 'native',
-        tagName: type,
-        attributes: attributes,
-        children: children
-      };
+        var arguments$1 = arguments;
+
+        for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+            children[_key - 2] = arguments$1[_key];
+        }
+
+        var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        if (!type) { return; }
+
+        children = Array.prototype.reduce.call(children, reduceChildren, []);
+        if (isFunction(type)) {
+            return createThunk(type, attributes, children, type);
+        }
+        return {
+            type: 'native',
+            tagName: type,
+            attributes: attributes,
+            children: children
+        };
     }
-  
+
     /**
      * 生成vdom 对象
      * @param fn render 函数
@@ -192,38 +192,38 @@
      * @returns {{type: string, fn: *, attributes: *, children: *}}
      */
     function createThunk(fn, props, children, options) {
-      return {
-        type: 'thunk',
-        fn: fn,
-        props: props,
-        children: children,
-        options: options
-      };
+        return {
+            type: 'thunk',
+            fn: fn,
+            props: props || {},
+            children: children,
+            options: options
+        };
     }
-  
+
     function createText(text) {
-      return {
-        type: text ? 'text' : 'empty',
-        nodeValue: text
-      };
+        return {
+            type: text ? 'text' : 'empty',
+            nodeValue: text
+        };
     }
-  
+
     function reduceChildren(children, vnode) {
-      if (isString(vnode) || isNumber(vnode)) {
-        children.push(createText(vnode));
-      } else if (isNull(vnode) || isUndefined(vnode)) ; else if (isArray(vnode)) {
-        children = [].concat(toConsumableArray(children), toConsumableArray(vnode.reduce(reduceChildren, [])));
-      } else {
-        children.push(vnode);
-      }
-      return children;
+        if (isString(vnode) || isNumber(vnode)) {
+            children.push(createText(vnode));
+        } else if (isNull(vnode) || isUndefined(vnode)) ; else if (isArray(vnode)) {
+            children = [].concat(toConsumableArray(children), toConsumableArray(vnode.reduce(reduceChildren, [])));
+        } else {
+            children.push(vnode);
+        }
+        return children;
     }
-  
+
     var component = function () {
       function component() {
         classCallCheck(this, component);
       }
-  
+
       createClass(component, [{
         key: "$update",
         value: function $update(dispatch) {
@@ -235,7 +235,7 @@
       }]);
       return component;
     }();
-  
+
     /**
      * add event handler
      * @param {*}
@@ -248,7 +248,7 @@
         }
       });
     }
-  
+
     function removeEventListeners($target, props) {
       props && Object.keys(props).forEach(function (name) {
         if (isEventProp(name)) {
@@ -256,7 +256,7 @@
         }
       });
     }
-  
+
     /**
      * 设置bool类型属性
      * @param {*} node 节点
@@ -272,7 +272,7 @@
         node[name] = false;
       }
     }
-  
+
     /**
      * 设置dom attribute
      * @param node dom
@@ -293,7 +293,7 @@
         }
       }
     }
-  
+
     /**
      * 更新属性值
      * @param {*} node
@@ -317,7 +317,7 @@
      */
     function updateAttributes($target, newProps) {
       var oldProps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  
+
       var props = Object.assign({}, oldProps, newProps);
       Object.keys(props).forEach(function (name) {
         if (!isEventProp(name)) {
@@ -329,7 +329,7 @@
         }
       });
     }
-  
+
     /**
      * 生成文本节点
      * @param text 节点值
@@ -339,7 +339,7 @@
         var value = isString(text) || isNumber(text) ? text : '';
         return document.createTextNode(value);
     }
-  
+
     /**
      * thunk => real node
      * @param vnode
@@ -348,8 +348,8 @@
         var _vnode$props = vnode.props,
             props = _vnode$props === undefined ? {} : _vnode$props,
             children = vnode.children;
-  
-  
+
+
         var model = {
             children: children,
             props: props
@@ -378,17 +378,17 @@
                 });
             }
         }
-  
+
         if (!output) {
             return '';
         }
         var DOMElement = createElement(output, dispatch);
         addEventListeners(DOMElement, output.attributes);
-  
+
         //渲染后执行onShow
         output.attributes && output.attributes.onShow && output.attributes.onShow(DOMElement);
         output.props && output.props.onShow && output.props.onShow(DOMElement);
-  
+
         vnode.state = {
             vnode: output,
             $ins: ins,
@@ -396,11 +396,11 @@
         };
         return DOMElement;
     }
-  
+
     function createSVGElement(name) {
         return document.createElementNS('http://www.w3.org/2000/svg', name);
     }
-  
+
     /**
      * html节点
      * @param {*} vnode
@@ -419,10 +419,10 @@
             }
             return dom;
         }).forEach($el.appendChild.bind($el));
-  
+
         return $el;
     }
-  
+
     /**
      * 生成空dom
      * @returns {Element}
@@ -430,7 +430,7 @@
     function createEmptyHTMLElement() {
         return document.createElement('noscript');
     }
-  
+
     /**
      * virtual dom -> dom
      * @param vnode
@@ -450,7 +450,7 @@
                 return createHTMLElement(vnode, dispatch);
         }
     };
-  
+
     /**
      * 更新node
      * @param node -dom node,  parent node of vdom
@@ -461,25 +461,25 @@
      */
     function updateElement(node, pre, next) {
         var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-  
+
         if (!node) { return; }
         if (pre === next && pre.type != 'thunk') { return; } // fix bug, shou test type after, because pre may undefined when create new node
-  
+
         if (!isUndefined(pre) && isUndefined(next)) {
             // bug, remove the node in pre with index
             removeNode(node, pre, next, index);
             return;
         }
-  
+
         if (isUndefined(pre) && !isUndefined(next)) {
             node.appendChild(createElement(next));
             return;
         }
-  
+
         if (!isNull(pre) && isNull(next) || isNull(pre) && !isNull(next)) {
             replaceNode(node, pre, next, index);return;
         }
-  
+
         if (pre.type !== next.type) {
             replaceNode(node, pre, next, index);return;
         }
@@ -490,18 +490,18 @@
             if (pre.tagName !== next.tagName) {
                 replaceNode(node, pre, next, index);return;
             }
-  
+
             updateAttributes(node.childNodes[index], next.attributes, pre.attributes);
             diffChildren(node, pre, next, index);return;
         }
-  
+
         if (isText(next)) {
             if (pre.nodeValue !== next.nodeValue) {
                 node.childNodes[index].nodeValue = next.nodeValue;
             }
             return;
         }
-  
+
         if (isThunk(next)) {
             if (isSameThunk(pre, next)) {
                 if (!pre.props || !next.props || !pre.props.key || pre.props.key != next.props.key) {
@@ -514,7 +514,7 @@
             }
         }
     }
-  
+
     /**
      * 删除节点
      * @param node
@@ -526,7 +526,7 @@
         removeThunk(pre);
         node.removeChild(node.childNodes[index]);
     }
-  
+
     /**
      * replace节点
      * @param node
@@ -540,7 +540,7 @@
         node.replaceChild(newNode, node.childNodes[index]);
         return newNode;
     }
-  
+
     /**
      * thunk元素销毁时处理onRemove
      * @param vnode
@@ -549,7 +549,7 @@
         while (isThunk(vnode)) {
             var onRemove = vnode.options.onRemove;
             var model = vnode.state.model;
-  
+
             if (onRemove) { onRemove(model); }
             vnode = vnode.state.vnode;
         }
@@ -557,7 +557,7 @@
             vnode.children.forEach(removeThunk);
         }
     }
-  
+
     /**
      * 更新子节点
      * @param node
@@ -572,27 +572,27 @@
         var nodeChildren = Array.prototype.slice.call(node.childNodes);
         var nl = nextChildren.length;
         // fix bug: node.children => node.childNodes, node.childNodes contains text node, but node.children doesn't
-  
+
         for (i = 0; i < preChildren.length || i < nl; i++) {
             updateElement(nodeChildren[index], preChildren[i], nextChildren[i], i >= nl ? nl : i);
         }
-  
+
         return node;
     }
-  
+
     /**
     * 更新thunk
     */
     function updateThunk(node, pre, next, index) {
         var props = next.props,
             children = next.children;
-  
+
         var model = {
             children: children,
             props: props
         };
         var nextNode = void 0;
-  
+
         if (isClass(next.fn)) {
             nextNode = pre.state.$ins.render(model);
         } else {
@@ -612,22 +612,22 @@
         };
         return node;
     }
-  
+
     function replaceThunk() {
         return updateThunk.apply(null, arguments);
     }
-  
+
     // import { diff } from './diff'
     // import { patch } from './patch'
-  
+
     function initNode(container, _env) {
         var _this = this;
-  
+
         var _ref = _env || { node: null, oldNode: null, ins: null },
             node = _ref.node,
             oldNode = _ref.oldNode,
             ins = _ref.ins;
-  
+
         container = typeof container === 'string' ? document.querySelector(container) : container;
         // 派发更新操作
         var dispatch = function dispatch(effect) {
@@ -636,28 +636,28 @@
         if (!_env) { container.innerHTML = ''; }
         function create(vnode) {
             var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : container;
-  
+
             node = createElement(vnode, dispatch);
             context.appendChild(node);
             oldNode = vnode;
             return { node: node, oldNode: oldNode, ins: ins };
         }
-  
+
         function update() {
             var vnode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : oldNode;
             var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : container;
-  
+
             // let patches = diff(oldNode, vnode)
             // patch(context.children[0], patches)
             updateElement(context, oldNode, vnode);
             oldNode = vnode;
             return { node: node, oldNode: oldNode, ins: ins };
         }
-  
+
         function updateAll() {
             var vnode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : oldNode;
             var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : container;
-  
+
             // console.log("updateAll updateAll")
             // add ins to fix bug: update the func element
             try {
@@ -680,7 +680,7 @@
             // update oldnode, or may cause diff vdom bug
             oldNode = vnode;
         }
-  
+
         return function (_ins) {
             var vnode = _ins;
             // 兼容functional program
@@ -704,21 +704,21 @@
             return node ? update(vnode) : create(vnode);
         };
     }
-  
+
     var ifBox = function (_component) {
       inherits(ifBox, _component);
-  
+
       function ifBox() {
         classCallCheck(this, ifBox);
         return possibleConstructorReturn(this, (ifBox.__proto__ || Object.getPrototypeOf(ifBox)).apply(this, arguments));
       }
-  
+
       createClass(ifBox, [{
         key: 'render',
         value: function render(_ref) {
           var props = _ref.props,
               children = _ref.children;
-  
+
           var _children = deepClone(children);
           var elseBox = findChildren(children, 'else');
           elseBox.index >= 0 && _children.splice(elseBox.index, 1);
@@ -741,15 +741,15 @@
       }]);
       return ifBox;
     }(component);
-  
+
     var forBox = function (_component) {
       inherits(forBox, _component);
-  
+
       function forBox() {
         classCallCheck(this, forBox);
         return possibleConstructorReturn(this, (forBox.__proto__ || Object.getPrototypeOf(forBox)).apply(this, arguments));
       }
-  
+
       createClass(forBox, [{
         key: 'handlePath',
         value: function handlePath(item, hashData) {
@@ -765,7 +765,7 @@
         key: 'handleAttribute',
         value: function handleAttribute(attributes, hashData) {
           var _this2 = this;
-  
+
           Object.keys(attributes).forEach(function (key) {
             attributes[key] = _this2.handlePath(attributes[key], hashData);
           });
@@ -774,7 +774,7 @@
         key: 'handleChildren',
         value: function handleChildren(children, hashData) {
           var _this3 = this;
-  
+
           children.forEach(function (item) {
             if (item.nodeValue) {
               item.nodeValue = _this3.handlePath(item.nodeValue, hashData);
@@ -788,10 +788,10 @@
         key: 'render',
         value: function render(_ref) {
           var _this4 = this;
-  
+
           var props = _ref.props,
               children = _ref.children;
-  
+
           if (props.data) {
             var hashData = '';
             var allChidren = [];
@@ -815,24 +815,24 @@
       }]);
       return forBox;
     }(component);
-  
+
     var elseBox = function (_component) {
       inherits(elseBox, _component);
-  
+
       function elseBox() {
         classCallCheck(this, elseBox);
         return possibleConstructorReturn(this, (elseBox.__proto__ || Object.getPrototypeOf(elseBox)).apply(this, arguments));
       }
-  
+
       createClass(elseBox, [{
         key: 'render',
         value: function render(_ref) {
           var props = _ref.props,
               children = _ref.children;
-  
+
           if (props && Object.keys(props).indexOf('cond') >= 0) {
             var elseChildren = findChildren(children, 'else');
-  
+
             var _children = children;
             if (elseChildren.index >= 0) {
               _children = deepClone(children);
@@ -864,21 +864,21 @@
       }]);
       return elseBox;
     }(component);
-  
+
     var l = createNode;
     var component$1 = component;
-  
+
     var IF = ifBox;
     var FOR = forBox;
     var ELSE = elseBox;
-  
+
     var app = function app(root) {
       var arguments$1 = arguments;
-  
+
       for (var _len = arguments.length, subviews = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         subviews[_key - 1] = arguments$1[_key];
       }
-  
+
       return function () {
         if ('render' in subviews[0]) {
           initNode(root)(subviews[0]);
@@ -892,15 +892,14 @@
         }
       }();
     };
-  
+
     exports.l = l;
     exports.component = component$1;
     exports.IF = IF;
     exports.FOR = FOR;
     exports.ELSE = ELSE;
     exports.app = app;
-  
+
     Object.defineProperty(exports, '__esModule', { value: true });
-  
+
   })));
-  

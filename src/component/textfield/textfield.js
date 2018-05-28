@@ -30,7 +30,7 @@ const act = {
                 if (props['textarea']) {
                     return <textarea onInput={actions.handleInput(state)} onFocus={actions.handleFocus(state)} onBlur={actions.handleBlur(state)} class="mdl-textfield__input" type="text" rows={props.rows || 3} maxrows={props.maxrows || 3}></textarea>
                 } else {
-                    return <input onClick={actions.handleClick(props, state)} onInput={actions.handleInput(state)} onFocus={actions.handleFocus(state)} onBlur={actions.handleBlur(state)} class="mdl-textfield__input" type="text" pattern={props.pattern} />
+                    return <input onClick={actions.handleClick(props)} onInput={actions.handleInput(state)} onFocus={actions.handleFocus(state)} onBlur={actions.handleBlur(state)} class="mdl-textfield__input" type="text" pattern={props.pattern} />
                 }
             },
             handleFocus: (state) => (e) => {
@@ -41,7 +41,7 @@ const act = {
                 state.focusCls = ""
                 TextfieldSub.$update()
             },
-            handleClick: (state) => (e) => {
+            handleClick: (props) => (e) => {
                 props.onClick && props.onClick(e)
                 TextfieldSub.$update()
             },

@@ -2,6 +2,7 @@
 基于lapp和Material Design 规范封装的组件。在线示例： https://chalecao.github.io/lapp-component/dist/index.html
 
 # usage
+
 ```
 import { l, app } from "lapp"
 import { Badge, Icon, Button, Card, Chip, Layout, TabPanel, Checkbox, Radio, Switch, Loading, Tooltip, Textfield, DatetimePicker } from "lappComponent"
@@ -160,5 +161,7 @@ const BoxView = ({ props, children }) => (<div>
 console.time("render virtual DOM with FP")
 app(document.querySelector("#app"), BoxView)
 console.timeEnd("render virtual DOM with FP")
+
+
 
 ```

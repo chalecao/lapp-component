@@ -87,6 +87,9 @@ const BoxView = ({ props, children }) => (<div>
     <br />
     <DatetimePicker></DatetimePicker>
 
+    <DatetimePicker label="开始时间：" floating-label></DatetimePicker>
+    <DatetimePicker label="结束时间：" floating-label></DatetimePicker>
+
     <br /><br />
     <Loading percent="30" />
     <br />

@@ -276,6 +276,8 @@
             ),
             lapp.l("br", null),
             lapp.l(lappComponent.DatetimePicker, null),
+            lapp.l(lappComponent.DatetimePicker, { label: "\u5F00\u59CB\u65F6\u95F4\uFF1A", "floating-label": true }),
+            lapp.l(lappComponent.DatetimePicker, { label: "\u7ED3\u675F\u65F6\u95F4\uFF1A", "floating-label": true }),
             lapp.l("br", null),
             lapp.l("br", null),
             lapp.l(lappComponent.Loading, { percent: "30" }),
